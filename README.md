@@ -1,7 +1,7 @@
 # NRNB238
 Dealing with issue 238 of NRNB, all the code given in this repo is work related to it.
 
-# Work done on grn_work notebeook is as follows:
+# Work done on grn_work notebook is as follows:
 
 ## Title: "Leveraging Pre-trained Models for Gene Regulatory Network Inference and Cell-Type-Specific Gene Program Extraction"
 
