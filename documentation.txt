@@ -1,0 +1,110 @@
+This code is written in Python and appears to be related to natural language processing (NLP) and machine learning. Here's a breakdown of the code:
+
+**Importing libraries and modules**
+
+The code starts by importing various libraries and modules:
+
+1. `torchtext.vocab`: This is a library for working with text data in PyTorch. The `Vocab` class is used to create a vocabulary for a dataset.
+2. `torchtext._torchtext`: This is a private module within the `torchtext` library. The `VocabPybind` class is likely a wrapper around the `Vocab` class.
+3. `sys`: This is a built-in Python module for working with the system and environment variables.
+4. `scgpt`: This appears to be a custom library or module, likely related to gene expression analysis or genomics.
+5. `scgpt.tasks`: This is a module within the `scgpt` library, likely containing tasks or workflows for processing gene expression data.
+6. `scgpt.tokenizer`: This is a module within the `scgpt` library, likely containing functions for tokenizing text data.
+7. `scgpt.model`: This is a module within the `scgpt` library, likely containing models for processing gene expression data.
+8. `scgpt.preprocess`: This is a module within the `scgpt` library, likely containing functions for preprocessing gene expression data.
+9. `scgpt.utils`: This is a module within the `scgpt` library, likely containing utility functions for working with gene expression data.
+10. `os`: This is a built-in Python module for working with operating system-specific functions.
+11. `warnings`: This is a built-in Python module for working with warnings and errors.
+
+**Setting environment variables**
+
+The code sets two environment variables:
+
+1. `KMP_WARNINGS`: This is a variable used by the Intel Math Kernel Library (MKL) to control the level of warnings emitted during execution. By setting it to `"off"`, the code is disabling warnings.
+2. `warnings.filterwarnings('ignore')`: This line is used to ignore warnings emitted by the Python `warnings` module. The `'ignore'` argument tells the `warnings` module to ignore all warnings.
+
+**Other code**
+
+The code also imports several modules and classes from the `scgpt` library, including:
+
+1. `GeneEmbedding`: This is a class within the `scgpt.tasks` module, likely related to embedding gene expression data.
+2. `GeneVocab`: This is a class within the `scgpt.tokenizer` module, likely related to creating a vocabulary for gene expression data.
+3. `TransformerModel`: This is a class within the `scgpt.model` module, likely related to a transformer-based model for processing gene expression data.
+4. `Preprocessor`: This is a class within the `scgpt.preprocess` module, likely related to preprocessing gene expression data.
+5. `set_seed`: This is a function within the `scgpt.utils` module, likely related to setting a random seed for reproducibility.
+
+Overall, this code appears to be setting up a environment for working with gene expression data using the `scgpt` library, which is likely a custom library for genomics and gene expression analysis.
+
+This code is setting various constants and variables for a gene expression analysis task. Here's a breakdown of the code:
+
+**Setting the random seed**
+
+`set_seed(42)`: This line sets the random seed to 42, which is a common practice in machine learning to ensure reproducibility of results. The `set_seed` function is likely a custom function within the `scgpt.utils` module.
+
+**Defining special tokens**
+
+`pad_token = "<pad>"`: This line defines a special token called `<pad>` which is likely used to pad sequences of gene expression data.
+
+`special_tokens = [pad_token, "<cls>", "<eoc>"]`: This line defines a list of special tokens, which are likely used in the gene expression analysis task. The tokens are:
+
+* `<pad>`: The padding token, used to pad sequences to a fixed length.
+* `<cls>`: The classification token, used to indicate the start of a sequence.
+* `<eoc>`: The end-of-sequence token, used to indicate the end of a sequence.
+
+**Defining constants**
+
+`n_hvg = 1200`: This line defines a constant `n_hvg` with a value of 1200. This is likely the number of highly variable genes (HVGs) to be used in the analysis.
+
+`n_bins = 51`: This line defines a constant `n_bins` with a value of 51. This is likely the number of bins to be used in the gene expression data.
+
+`mask_value = -1`: This line defines a constant `mask_value` with a value of -1. This is likely used to mask values in the gene expression data.
+
+`pad_value = -2`: This line defines a constant `pad_value` with a value of -2. This is likely used to pad sequences of gene expression data.
+
+`n_input_bins = n_bins`: This line sets a constant `n_input_bins` to the value of `n_bins`, which is 51. This is likely the number of input bins for the gene expression data.
+
+Overall, this code is setting up the environment for a gene expression analysis task, defining special tokens, constants, and variables for preprocessing and analyzing the data.
+
+This code is loading a pre-trained scGPT model for gene expression analysis and retrieving its parameters. Here's a breakdown of the code:
+
+**Loading the model**
+
+`model_dir = Path("/home/dostofizky/Documents/NRNB238/models/scGPT_all_model/scGPT_human")`: This line specifies the directory path where the pre-trained scGPT model is stored.
+
+`model_config_file = model_dir / "args.json"`: This line specifies the path to the configuration file for the model, which is a JSON file named `args.json`.
+
+`model_file = model_dir / "best_model.pt"`: This line specifies the path to the pre-trained model file, which is a PyTorch model file named `best_model.pt`.
+
+`vocab_file = model_dir / "vocab.json"`: This line specifies the path to the vocabulary file for the model, which is a JSON file named `vocab.json`.
+
+**Loading the vocabulary**
+
+`vocab = GeneVocab.from_file(vocab_file)`: This line loads the vocabulary from the `vocab_file`.
+
+`for s in special_tokens: ...`: This loop iterates over the special tokens defined earlier (`pad_token`, `<cls>`, and `<eoc>`). For each token, it checks if the token is not already in the vocabulary. If it's not, it appends the token to the vocabulary.
+
+**Retrieving model parameters**
+
+`with open(model_config_file, "r") as f: ...`: This line opens the configuration file in read mode.
+
+`model_configs = json.load(f)`: This line loads the configuration file as a JSON object.
+
+`print(...)` : This line prints a message indicating that the model will be resumed from the `best_model.pt` file, and the model arguments will override the configuration file.
+
+`embsize = model_configs["embsize"]`: This line retrieves the value of the `embsize` parameter from the configuration file.
+
+`nhead = model_configs["nheads"]`: This line retrieves the value of the `nheads` parameter from the configuration file.
+
+`d_hid = model_configs["d_hid"]`: This line retrieves the value of the `d_hid` parameter from the configuration file.
+
+`nlayers = model_configs["nlayers"]`: This line retrieves the value of the `nlayers` parameter from the configuration file.
+
+`n_layers_cls = model_configs["n_layers_cls"]`: This line retrieves the value of the `n_layers_cls` parameter from the configuration file.
+
+`gene2idx = vocab.get_stoi()`: This line retrieves the `gene2idx` mapping from the vocabulary, which maps gene names to indices.
+
+Overall, this code is loading a pre-trained scGPT model for gene expression analysis, retrieving its parameters from a configuration file, and preparing the vocabulary for the model.
+
+
+
+

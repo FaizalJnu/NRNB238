@@ -1,0 +1,13 @@
+Curated Datasets:
+GSD (Gold Standard) -> whole_human model
+VSC (Vascular) -> blood model
+mCAD (Mouse Cell Atlas Data) -> pan-cancer model
+HSC (Hematopoietic Stem Cells) -> blood model
+scRNA-Seq Datasets:
+hESC -> whole_human model
+hHep -> liver (or potentially whole_human if liver-specific not available)
+mDC -> pan-cancer model
+mESC -> pan-cancer model
+mHSC-E -> blood model
+mHSC-GM -> blood model
+mHSC-L -> blood model

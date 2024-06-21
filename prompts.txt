@@ -1,0 +1,3 @@
+hey so, I have a dataset alright? .h5ad formatted. I need to use that data set to generate gene embeddings through scGPT, after which we will use those embeddings to generate GRNs through PIDC, GRNBoost2 and GENIE3 algorithms. So let's start with the first step:
+
+
