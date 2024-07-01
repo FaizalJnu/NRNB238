@@ -1,0 +1,74 @@
+Vocab Error Resolution
+
+Thank you for providing the output. This information is very revealing and helps us pinpoint the issue. Let's analyze what we're seeing:
+
+1. Input data statistics:
+   - The input data seems to have reasonable variation (Std: 1.0277)
+   - The data range (Min: 0.0000, Max: 3.7253) looks normal for gene expression data
+
+2. Vocabulary coverage:
+   - Vocabulary coverage: 0.00%
+   - This is the critical issue. None of the genes in your input data are found in the model's vocabulary.
+
+3. Output embedding statistics:
+   - The output embeddings have zero mean and zero standard deviation, which explains the identical embeddings
+
+4. Sample embeddings:
+   - All five sample genes have identical embeddings, confirming the issue
+
+The root cause of your problem is clear now: the gene names in your input data are not recognized by the model's vocabulary. This leads to several important points:
+
+1. Vocabulary Mismatch: Your input data uses gene names that are completely different from what the model was trained on. This could be due to different naming conventions, species differences, or using a model trained on a different type of data.
+
+2. Default Embedding: When the model encounters an unknown token (in this case, all of your genes), it's likely defaulting to a single, fixed embedding for all unknown tokens. This explains why all your genes end up with identical embeddings.
+
+3. Model Behavior: The model is behaving as expected when given completely unknown input - it's just not the behavior we want for your analysis.
+
+To resolve this issue, you need to align your gene names with the vocabulary the model expects. Here are some steps to take:
+
+1. Investigate the model's vocabulary:
+   - Print out some sample entries from the model's vocabulary to see what format it expects:
+     ```python
+     print("Sample vocabulary entries:")
+     print(list(vocab.stoi.keys())[:10])  # Print first 10 entries
+     ```
+
+2. Check your gene names:
+   - Print out some of your gene names to compare with the vocabulary:
+     ```python
+     print("Sample gene names from your data:")
+     print(gene_names[:10])  # Print first 10 gene names
+     ```
+
+3. Gene name conversion:
+   - You might need to convert your gene names to match the format the model expects. This could involve:
+     - Converting to uppercase/lowercase
+     - Adding/removing prefixes or suffixes
+     - Using alternative gene identifiers (e.g., Ensembl IDs instead of gene symbols)
+
+4. Use a different model:
+   - If the gene naming convention mismatch is due to species differences (e.g., you're using mouse data with a human model), you might need to find or train a model specific to your species.
+
+5. Retrain or fine-tune the model:
+   - If you can't find a suitable pre-trained model, you might need to retrain or fine-tune the model on data that matches your gene naming convention.
+
+Here's a modified section of the script to help diagnose the vocabulary issue:
+
+```python
+print("Sample vocabulary entries:")
+print(list(vocab.stoi.keys())[:10])  # Print first 10 entries
+
+print("\nSample gene names from your data:")
+print(gene_names[:10])  # Print first 10 gene names
+
+# Attempt to convert gene names (example: to uppercase)
+converted_gene_names = [gene.upper() for gene in gene_names]
+check_vocab_coverage(converted_gene_names, vocab)
+
+if vocab.stoi.get("<unk>") is None:
+    print("Warning: Vocabulary does not have an <unk> token for unknown words.")
+```
+
+Run this modified script and share the output. This will help us understand the exact nature of the mismatch between your gene names and the model's vocabulary, and guide us towards a solution.
+
+
